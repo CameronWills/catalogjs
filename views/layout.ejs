@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% if (typeof(title) == 'undefined')
+        var title = "Express Starter Template";
+       else 
+        title = "title";
+    %>
+
+    <link rel='stylesheet' href="<%= base + '/stylesheets/style.css'%>">
+    <script src="<%= base + '/javascripts/jquery-1.7.min.js' %>"></script>
+
+  </head>
+  <body>
+    <header>
+      <div class='content-wrapper'>
+        <div class="float-left">
+          <p class="site-title">
+            <a href="/">your logo here</a>
+          </p>
+        </div>
+        <div class="float-right">
+          <section id="login">
+            <ul>
+            <% if(!everyauth.loggedIn) { %>
+                <li>
+                    <a href="/login">Log in</a>
+                </li>
+                <li>
+                    <a href="/register">Register</a>
+                </li>
+            <% } else { %>
+                <% if(everyauth.facebook) { %>
+                    <li> Welcome <%= everyauth.facebook.user.first_name %> <%= everyauth.facebook.user.last_name %></li>        
+                <% } else if(everyauth.twitter) { %>
+                    <li> Welcome <%= everyauth.twitter.name %></li>    
+                <% } else if(everyauth.password) { %>
+                    <li> Welcome <%= everyauth.user.email %></li>
+                <% } %>
+                <li>
+                    <a href="/logout">Logout</a>
+                </li>
+            <% } %>
+            </ul>
+          </section>
+          <nav>
+            <ul id="menu">
+              <li>
+                <a href="/">Home</a>
+              </li>
+              <li>
+                <a href="/about">About</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <div id="body"><%- body %></div>
+      
+    <footer>
+      <div class="content-wrapper">
+        <div class="float-left">
+          <p> &copy; <%= (new Date()).getFullYear() %> </p>
+        </div>
+        <div class="float-right">
+          <ul id="social">
+            <li>
+              <a href="http://facebook.com" class="facebook">Facebook</a>
+              <a href="http://twitter.com", class="twitter">Twitter</a>
+            </li>
+          </ul>
+        </div>
+        </div>
+    </footer>
+
+  </body>  
+   
+</html>

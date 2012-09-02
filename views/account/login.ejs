@@ -1,0 +1,63 @@
+<section class="main-content">
+    <hgroup class="title">
+      <h1>Log in</h1>
+      <h2> Enter your user name and password below </h2>    
+    </hgroup>
+      <% if ('undefined' !== typeof errors && errors.length) { %>
+        <ul id="errors">
+        <% for(var error in errors) { %>
+            <li class="error"> <%= errors[error] %></li>
+        <% } %>
+        </ul>
+      <% }%>
+
+      <section id="loginForm">
+        <form method="post", action="/login">
+            <fieldset>
+                <legend>Log in to Your Account.</legend>
+                <ol>
+                    <li class="username">
+                        <label for="<%=everyauth.password.loginFormFieldName %>">Email:</label>
+                        <input type="text" name="<%=everyauth.password.loginFormFieldName %>" value="<%= email %>" />
+                    </li>
+                    <li class="password">
+                        <label for="<%everyauth.password.passwordFormFieldName%>">Password</label>
+                        <input type="password" name="<%= everyauth.password.passwordFormFieldName%>" />
+                    </li>
+                    <li class="remember-me">
+                        <input type="checkbox" id="rememberMe" name="rememberMe" value="true" />
+                        <label class="checkbox" for="rememberMe">Remember me?</label>
+                    </li>
+                </ol>
+                <input type="submit" value="Login" />
+            </fieldset>
+        </form>
+
+        <a href="/register">Don't have an Account?</a>
+        <a href="/forgotPassword">Did you forget your password?</a>
+    </section>
+    <section class="social" id="socialLoginForm">
+        <form method="post">
+            <h2>Use another service to log in</h2>
+            <div class="message-info">
+                <p>
+                    To let users of this site log in using their accounts from other sites such as Facebook, Twitter, 
+                    and Windows Live, you must update this site. For more information
+                    <a href="http://go.microsoft.com/fwlink/?LinkID=226949"> click here</a>
+                </p>
+              
+                <fieldset>
+                    <legend>Log in using another service</legend>
+                    <a href='/auth/facebook' class="fb_button_medium button">
+                        <img src="<%= base + '/images/facebookLogin.png' %>" alt="Facebook"/>
+                    </a>
+                    <br/>
+                    <br/>
+                    <a href='/auth/twitter'style='border: 0px' >
+                        <img style='border: 0px' src='https://si0.twimg.com/images/dev/buttons/sign-in-with-twitter-l.png' alt="Twitter"/>
+                    </a>
+               </fieldset>
+            </div>
+        </form>
+    </section>
+</section>

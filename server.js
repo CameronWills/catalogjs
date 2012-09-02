@@ -6,7 +6,7 @@
 **/
 
 var express = require('express')
-  , less = require('less')
+  , ejs = require('ejs')
   , connect = require('connect')
   , everyauth = require('everyauth')
   , nconf = require('nconf')
@@ -19,7 +19,7 @@ var express = require('express')
 * load configuration settings from ENV, then settings.json.  Contains keys for OAuth logins. See 
 * settings.example.json.  
 **/
-nconf.env().file({file: 'settings.json'});
+nconf.env().file({file: 'settings.what.json'});
 
 
 /**
@@ -187,7 +187,7 @@ var app = module.exports = express.createServer();
 
 app.configure(function() {
     app.set('views', __dirname + '/views');
-    app.set('view engine', 'jade');
+    app.set('view engine', 'ejs');
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(require('./middleware/locals'));
@@ -226,45 +226,6 @@ require('./routes/account')(app);
 // Global Routes - this should be last!
 require('./routes/global')(app);
 
-
-
-/**
-* CHAT / SOCKET.IO 
-* -------------------------------------------------------------------------------------------------
-* this shows a basic example of using socket.io to orchestrate chat
-**/
-
-// socket.io configuration
-var buffer = [];
-var io = require('socket.io').listen(app);
-
-
-io.configure(function() {
-    io.set("transports", ["xhr-polling"]);
-    io.set("polling duration", 100);
-});
-
-io.sockets.on('connection', function(socket) {
-    socket.emit('messages', { buffer: buffer });
-    socket.on('setname', function(name) {
-        socket.set('name', name, function() {
-            socket.broadcast.emit('announcement', { announcement: name + ' connected' });
-        });
-    });
-    socket.on('message', function(message) {
-        socket.get('name', function(err, name) {
-            var msg = { message: [name, message] };
-            buffer.push(msg);
-            if(buffer.length > 15) buffer.shift();
-            socket.broadcast.emit('message', msg);
-        })
-    });
-    socket.on('disconnect', function() {
-        socket.get('name', function(err, name) {
-            socket.broadcast.emit('announcement', { announcement: name + ' disconnected' });
-        })
-    })
-});
 
 /**
 * RUN

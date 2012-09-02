@@ -1,0 +1,41 @@
+<section class="main-content">
+    <hgroup class="title">
+        <h1> <%= title %></h1>
+        <h2>Use the form below to create a new account</h2>
+    </hgroup>
+    <% if ('undefined' !== typeof errors && errors.length) { %>
+      <ul id="errors">
+        <% for(var error in errors) { %>
+          <li class="error"><%= errors[error] %></li>
+        <% } %>
+      </ul>
+    <% } %>
+    <form method="post">
+        <fieldset>
+            <legend> Registration Form</legend>
+            <ol>
+                <li class="email">
+                    <label for="<%=everyauth.password.loginFormFieldName %>">Email address</label>
+                    <input type="text" name="<%=everyauth.password.loginFormFieldName %>" />
+                </li>
+                <li class="password">
+                    <label for="<%= everyauth.password.passwordFormFieldName %>">Password</label>
+                    <input type="password" name="<%= everyauth.password.passwordFormFieldName %>" />
+                </li>
+                <li class="confirm-password">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" name="confirmPassword" />
+                </li>
+                <li class="recaptcha">
+                    <div class="message-info">
+                        <%- recaptcha_form %>
+                    </div>
+                </li>
+            </ol>
+            <input type="submit" value="Register">
+            <p>
+                Did you know you can use other services to log in to this site? <a href="/login"> Log in using one of the supported services</a>.
+            </p>
+        </fieldset>
+    </form>
+</section>
